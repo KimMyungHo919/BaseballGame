@@ -12,7 +12,7 @@ public class BaseballGame {
     // 객체 생성시 정답을 만들도록 함
     public BaseballGame() {
         correctNumberSet = randomNumber();
-        correctNumberList.addAll(correctNumberSet); // get 메서드 쓰려고 만들었음.
+        correctNumberList.addAll(correctNumberSet); // get(), contains() 메서드 쓰려고 만들었음.
     }
 
     // 랜덤숫자 생성 메서드. 객체 생성될때 정답숫자생성함. Set 으로 저장.
@@ -57,7 +57,12 @@ public class BaseballGame {
             int balls = countBall(userInput);
 
             // 7. 힌트 출력
-            System.out.println(strikes + "스트라이크 " + balls + "볼 입니다!");
+            if (strikes == 0 && balls == 0) {
+                System.out.println("아웃!");
+            } else {
+                System.out.println(strikes + "스트라이크 " + balls + "볼 입니다!");
+            }
+
         }
         // 게임 진행횟수 반환
         return tryGames;
@@ -65,7 +70,7 @@ public class BaseballGame {
 
     // 옳바른 값인지 판단하는 메서드.
     protected boolean validateInput(String input) {
-        if (input.length() != 3 || !input.matches("[1-9]{3}")) {
+        if (input.length() != 3 || !input.matches("[1-9]{3}")) { // ⭐️String matches()⭐️
             return false;
         }
         Set<Character> digitSet = new HashSet<>(); // 중복값 있는지 없는지 판단하기위해.
@@ -80,31 +85,31 @@ public class BaseballGame {
     // 스트라이크 카운트
     private int countStrike(String input) {
         int strikes = 0;
-        List<Integer> userInputResult = new ArrayList<>();
+        List<Integer> userInputList = new ArrayList<>();
 
         for (char digit : input.toCharArray()) {
-            userInputResult.add(Character.getNumericValue(digit)); // ⭐️Character.getNumericValue()⭐️
+            userInputList.add(Character.getNumericValue(digit)); // ⭐️Character.getNumericValue()⭐️
         }
 
         for (int i=0; i<3; i++) {
-            if (userInputResult.get(i).equals(correctNumberList.get(i)) ) {
+            if (userInputList.get(i).equals(correctNumberList.get(i)) ) {
                 strikes++;
             }
         }
         return strikes;
     }
 
-    // 볼 카운트
+    // 볼 카운트 . 스트라이크카운터랑 거의 똑같은로직.
     private int countBall(String input) {
         int balls = 0;
-        List<Integer> userInputResult = new ArrayList<>();
+        List<Integer> userInputList = new ArrayList<>();
 
         for (char digit : input.toCharArray()) {
-            userInputResult.add(Character.getNumericValue(digit)); // ⭐️Character.getNumericValue()⭐️
+            userInputList.add(Character.getNumericValue(digit)); // ⭐️Character.getNumericValue()⭐️
         }
 
         for (int i=0; i<3; i++) {
-            if (correctNumberList.contains(userInputResult.get(i)) && !userInputResult.get(i).equals(correctNumberList.get(i))) {
+            if (correctNumberList.contains(userInputList.get(i)) && !userInputList.get(i).equals(correctNumberList.get(i))) {
                 balls++;
             }
         }
