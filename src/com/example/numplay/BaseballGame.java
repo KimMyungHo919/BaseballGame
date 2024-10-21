@@ -25,6 +25,22 @@ public class BaseballGame {
         return correctNumberSet; // correctNumber.size() 가 3이되면 return.
     }
 
+    public void showMenu() { // 시작메뉴 보여주기.
+        System.out.println("환영합니다! 원하시는 번호를 입력해주세요");
+        System.out.println("1. 게임 시작하기");
+        System.out.println("2. 게임 종료하기");
+        String userChoice = scanner.nextLine();
+
+        if (userChoice.equals("1")) {
+            play();
+        } else if (userChoice.equals("2")) {
+            System.exit(0); // 2입력받을시 프로그램 종료.
+        } else {
+            System.out.println("잘못 입력하셨습니다! 다시 시작합니다.");
+            showMenu();
+        }
+    }
+
     public int play() {
         int tryGames = 0;
         // 게임시작
@@ -48,8 +64,8 @@ public class BaseballGame {
 
             // 5. 정답여부 확인, 만약 정답이면 break 를 이용해 반복문 탈출
             if (strikes == 3) {
-                System.out.println("정답입니다!");
-                System.out.println(tryGames + "번째 시도에 정답을 맞췄어요!");
+                System.out.println("홈런 !");
+                System.out.println(tryGames + "번째 시도에 정답을 맞췄어요!\n");
                 break;
             }
 
@@ -64,6 +80,8 @@ public class BaseballGame {
             }
 
         }
+        System.out.println("게임이 종료되었어요! 다시 메뉴로 돌아갑니다.\n");
+        showMenu();
         // 게임 진행횟수 반환
         return tryGames;
     }

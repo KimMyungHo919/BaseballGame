@@ -6,6 +6,6 @@ public class Main {
         BaseballGame game = new BaseballGame();
 
         // 게임시작
-        game.play();
+        game.showMenu();
     }
 }
