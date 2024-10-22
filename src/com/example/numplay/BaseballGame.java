@@ -47,8 +47,9 @@ public class BaseballGame {
 
     public void record() { // 시도횟수를 출력하는 메서드.
         for (int i=1; i<=recordList.size(); i++) {
-            System.out.println(i + "번째 게임 : 시도횟수 - " + recordList.get(i-1) + "\n");
+            System.out.println(i + "번째 게임 : 시도횟수 - " + recordList.get(i-1));
         }
+        System.out.println(); // for문안에 있던 \n 을 밖에 꺼냈음. 게임기록볼때 가독성이 떨어짐.
         showMenu();
     }
 
