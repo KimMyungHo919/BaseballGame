@@ -7,6 +7,7 @@ public class BaseballGame {
     // 정답숫자. Set
     private Set<Integer> correctNumberSet = new HashSet<>(); // 정답숫자 . Set
     private List<Integer> correctNumberList = new ArrayList<>(); // get() contains() 쓰기위해서 만듦.
+    private List<Integer> recordList = new ArrayList<>(); // 기록 보관할 List
     private Scanner scanner = new Scanner(System.in); // 스캐너
 
     // 객체 생성시 정답을 만들도록 함
@@ -28,17 +29,27 @@ public class BaseballGame {
     public void showMenu() { // 시작메뉴 보여주기.
         System.out.println("환영합니다! 원하시는 번호를 입력해주세요");
         System.out.println("1. 게임 시작하기");
-        System.out.println("2. 게임 종료하기");
+        System.out.println("2. 기록보기");
+        System.out.println("3. 게임 종료하기");
         String userChoice = scanner.nextLine();
 
         if (userChoice.equals("1")) {
             play();
         } else if (userChoice.equals("2")) {
+            record();
+        } else if (userChoice.equals("3")) {
             System.exit(0); // 2입력받을시 프로그램 종료.
         } else {
             System.out.println("잘못 입력하셨습니다! 다시 시작합니다.");
             showMenu();
         }
+    }
+
+    public void record() { // 시도횟수를 출력하는 메서드.
+        for (int i=1; i<=recordList.size(); i++) {
+            System.out.println(i + "번째 게임 : 시도횟수 - " + recordList.get(i-1) + "\n");
+        }
+        showMenu();
     }
 
     public int play() {
@@ -66,6 +77,7 @@ public class BaseballGame {
             if (strikes == 3) {
                 System.out.println("홈런 !");
                 System.out.println(tryGames + "번째 시도에 정답을 맞췄어요!\n");
+                recordList.add(tryGames); // 정답맞췄을때 기록리스트에 추가하기.
                 break;
             }
 
