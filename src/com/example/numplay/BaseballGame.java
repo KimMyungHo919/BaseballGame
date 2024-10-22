@@ -38,6 +38,7 @@ public class BaseballGame {
         } else if (userChoice.equals("2")) {
             record();
         } else if (userChoice.equals("3")) {
+            System.out.println("< 숫자야구게임을 종료합니다. >");
             System.exit(0); // 2입력받을시 프로그램 종료.
         } else {
             System.out.println("잘못 입력하셨습니다! 다시 시작합니다.");
@@ -46,6 +47,9 @@ public class BaseballGame {
     }
 
     public void record() { // 시도횟수를 출력하는 메서드.
+        if (recordList.size() == 0) {
+            System.out.println("아직 게임을 진행하지 않았습니다! 게임을 진행해주세요!"); // 게임을 하나도 진행하지않았을때 보여주는 문구.
+        }
         for (int i=1; i<=recordList.size(); i++) {
             System.out.println(i + "번째 게임 : 시도횟수 - " + recordList.get(i-1));
         }
