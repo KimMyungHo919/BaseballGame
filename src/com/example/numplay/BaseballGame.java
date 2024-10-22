@@ -123,7 +123,8 @@ public class BaseballGame {
         List<Integer> userInputList = new ArrayList<>();
 
         for (char digit : input.toCharArray()) {
-            userInputList.add(Character.getNumericValue(digit)); // ⭐️Character.getNumericValue()⭐️
+//            userInputList.add(Character.getNumericValue(digit)); // ⭐️Character.getNumericValue()⭐️
+            userInputList.add(digit - '0'); // getNumericValue() 메서드 대신에 이렇게 구현하는게 깔끔할거같음. input값이 검증되어서 들어옴.
         }
 
         for (int i=0; i<3; i++) {
