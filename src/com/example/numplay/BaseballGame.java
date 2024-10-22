@@ -8,6 +8,7 @@ public class BaseballGame {
     private Set<Integer> correctNumberSet = new HashSet<>(); // 정답숫자 . Set
     private List<Integer> correctNumberList = new ArrayList<>(); // get() contains() 쓰기위해서 만듦.
     private List<Integer> recordList = new ArrayList<>(); // 기록 보관할 List
+    private BaseballGameDisplay countStrikesAndBalls = new BaseballGameDisplay();
     private Scanner scanner = new Scanner(System.in); // 스캐너
 
     // 객체 생성시 정답을 만들도록 함
@@ -39,7 +40,7 @@ public class BaseballGame {
             record();
         } else if (userChoice.equals("3")) {
             System.out.println("< 숫자야구게임을 종료합니다. >");
-            System.exit(0); // 2입력받을시 프로그램 종료.
+            System.exit(0); // 3입력받을시 프로그램 종료.
         } else {
             System.out.println("잘못 입력하셨습니다! 다시 시작합니다.");
             showMenu();
@@ -90,11 +91,7 @@ public class BaseballGame {
             int balls = countBall(userInput);
 
             // 7. 힌트 출력
-            if (strikes == 0 && balls == 0) {
-                System.out.println("아웃!");
-            } else {
-                System.out.println(strikes + "스트라이크 " + balls + "볼 입니다!");
-            }
+            countStrikesAndBalls.displayHint(strikes, balls);
 
         }
         System.out.println("게임이 종료되었어요! 다시 메뉴로 돌아갑니다.\n");
@@ -123,8 +120,7 @@ public class BaseballGame {
         List<Integer> userInputList = new ArrayList<>();
 
         for (char digit : input.toCharArray()) {
-//            userInputList.add(Character.getNumericValue(digit)); // ⭐️Character.getNumericValue()⭐️
-            userInputList.add(digit - '0'); // getNumericValue() 메서드 대신에 이렇게 구현하는게 깔끔할거같음. input값이 검증되어서 들어옴.
+            userInputList.add(digit - '0'); // 숫자의 아스키코드. '0' - 48
         }
 
         for (int i=0; i<3; i++) {
@@ -141,7 +137,7 @@ public class BaseballGame {
         List<Integer> userInputList = new ArrayList<>();
 
         for (char digit : input.toCharArray()) {
-            userInputList.add(Character.getNumericValue(digit)); // ⭐️Character.getNumericValue()⭐️
+            userInputList.add(digit - '0');
         }
 
         for (int i=0; i<3; i++) {
