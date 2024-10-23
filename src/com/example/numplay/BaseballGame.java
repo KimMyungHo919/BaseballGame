@@ -12,8 +12,8 @@ public class BaseballGame {
     private Scanner scanner = new Scanner(System.in); // 스캐너
 
     // 랜덤숫자 생성 메서드. 객체 생성될때 정답숫자생성함. Set 으로 저장.
-    private Set<Integer> randomNumber() {
-        while (correctNumberSet.size() < 3) {
+    private Set<Integer> randomNumber(int figure) {
+        while (correctNumberSet.size() < figure) {
             Random random = new Random(); // 랜덤 생성
             int digit = random.nextInt(9) + 1; // nextInt(9) 는 0~8 숫자 생성. 그래서 +1 해줌
             correctNumberSet.add(digit); // Set에 추가.
@@ -24,26 +24,44 @@ public class BaseballGame {
 
     public void showMenu() { // 시작메뉴 보여주기.
         System.out.println("환영합니다! 원하시는 번호를 입력해주세요");
+        System.out.println("0. 자릿수로 난이도 조절하기");
         System.out.println("1. 게임 시작하기");
         System.out.println("2. 기록보기");
         System.out.println("3. 게임 종료하기");
         String userChoice = scanner.nextLine();
 
-        if (userChoice.equals("1")) {
-            play();
-        } else if (userChoice.equals("2")) {
-            record();
-        } else if (userChoice.equals("3")) {
-            System.out.println("< 숫자야구게임을 종료합니다. >");
-            System.exit(0); // 3입력받을시 프로그램 종료.
-        } else {
-            System.out.println("잘못 입력하셨습니다! 다시 시작합니다.");
-            showMenu();
+        switch(userChoice) {
+            case "0":
+                System.out.println("자리수를 선택해주세요! (3~5자리)");
+                int figure = scanner.nextInt();
+                scanner.nextLine();
+                if (figure==3 || figure==4 || figure==5) {
+                    play(figure);
+                } else {
+                    System.out.println("자릿수를 잘못 입력했습니다! 처음부터 다시 시작합니다.\n");
+                    showMenu();
+                    return;
+                }
+                break;
+            case "1":
+                play(3);
+                break;
+            case "2":
+                record();
+                break;
+            case "3":
+                System.out.println("< 숫자야구게임을 종료합니다. >");
+                System.exit(0); // 3입력받을시 프로그램 종료
+                break;
+            default:
+                System.out.println("잘못 입력하셨습니다! 다시 시작합니다.");
+                showMenu();
+                break;
         }
     }
 
     public void record() { // 시도횟수를 출력하는 메서드.
-        if (recordList.size() == 0) {
+        if (recordList.isEmpty()) { // == 0 을 메서드로 수정
             System.out.println("아직 게임을 진행하지 않았습니다! 게임을 진행해주세요!"); // 게임을 하나도 진행하지않았을때 보여주는 문구.
         }
         for (int i=1; i<=recordList.size(); i++) {
@@ -53,14 +71,14 @@ public class BaseballGame {
         showMenu();
     }
 
-    public int play() {
-        correctNumberSet = randomNumber(); // 게임플레이 시작시에 랜덤숫자 넣기
+    public int play(int figure) {
+        correctNumberSet = randomNumber(figure); // 게임플레이 시작시에 랜덤숫자 넣기
         correctNumberList.addAll(correctNumberSet); // 게임플레이 시작시에 랜덤숫자 넣기
 
         int tryGames = 0;
         // 게임시작
         System.out.println("< 게임을 시작합니다 >");
-        System.out.println("3자리 숫자를 입력해주세요 !");
+        System.out.println(figure + "자리 숫자를 입력해주세요 !");
 
         while (true) {
             // 1. 유저에게 입력값을 받음
@@ -78,7 +96,7 @@ public class BaseballGame {
             int strikes = countStrike(userInput);
 
             // 5. 정답여부 확인, 만약 정답이면 break 를 이용해 반복문 탈출
-            if (strikes == 3) {
+            if (strikes == figure) {
                 System.out.println("홈런 !");
                 System.out.println(tryGames + "번째 시도에 정답을 맞췄어요!\n");
                 recordList.add(tryGames); // 정답맞췄을때 기록리스트에 추가하기.
@@ -102,7 +120,7 @@ public class BaseballGame {
 
     // 옳바른 값인지 판단하는 메서드.
     protected boolean validateInput(String input) {
-        if (input.length() != 3 || !input.matches("[1-9]{3}")) { // ⭐️String matches()⭐️
+        if (!input.matches("[1-9]{3,5}")) { // ⭐️String matches()⭐️
             return false;
         }
         Set<Character> digitSet = new HashSet<>(); // 중복값 있는지 없는지 판단하기위해.
@@ -123,7 +141,7 @@ public class BaseballGame {
             userInputList.add(digit - '0'); // 숫자의 아스키코드. '0' - 48
         }
 
-        for (int i=0; i<3; i++) {
+        for (int i=0; i<input.length(); i++) {
             if (userInputList.get(i).equals(correctNumberList.get(i)) ) {
                 strikes++;
             }
@@ -140,7 +158,7 @@ public class BaseballGame {
             userInputList.add(digit - '0');
         }
 
-        for (int i=0; i<3; i++) {
+        for (int i=0; i<input.length(); i++) {
             if (correctNumberList.contains(userInputList.get(i)) && !userInputList.get(i).equals(correctNumberList.get(i))) {
                 balls++;
             }
