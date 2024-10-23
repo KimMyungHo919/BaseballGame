@@ -11,12 +11,6 @@ public class BaseballGame {
     private BaseballGameDisplay countStrikesAndBalls = new BaseballGameDisplay();
     private Scanner scanner = new Scanner(System.in); // 스캐너
 
-    // 객체 생성시 정답을 만들도록 함
-    public BaseballGame() {
-        correctNumberSet = randomNumber();
-        correctNumberList.addAll(correctNumberSet); // get(), contains() 메서드 쓰려고 만들었음.
-    }
-
     // 랜덤숫자 생성 메서드. 객체 생성될때 정답숫자생성함. Set 으로 저장.
     private Set<Integer> randomNumber() {
         while (correctNumberSet.size() < 3) {
@@ -24,6 +18,7 @@ public class BaseballGame {
             int digit = random.nextInt(9) + 1; // nextInt(9) 는 0~8 숫자 생성. 그래서 +1 해줌
             correctNumberSet.add(digit); // Set에 추가.
         }
+        System.out.println(correctNumberSet); // ⭐️⭐️테스트용⭐️⭐️
         return correctNumberSet; // correctNumber.size() 가 3이되면 return.
     }
 
@@ -59,6 +54,9 @@ public class BaseballGame {
     }
 
     public int play() {
+        correctNumberSet = randomNumber(); // 게임플레이 시작시에 랜덤숫자 넣기
+        correctNumberList.addAll(correctNumberSet); // 게임플레이 시작시에 랜덤숫자 넣기
+
         int tryGames = 0;
         // 게임시작
         System.out.println("< 게임을 시작합니다 >");
@@ -84,6 +82,8 @@ public class BaseballGame {
                 System.out.println("홈런 !");
                 System.out.println(tryGames + "번째 시도에 정답을 맞췄어요!\n");
                 recordList.add(tryGames); // 정답맞췄을때 기록리스트에 추가하기.
+                correctNumberSet.clear(); // 정답 맞췄을때 초기화
+                correctNumberList.clear(); // 정답 맞췄을때 초기화
                 break;
             }
 
