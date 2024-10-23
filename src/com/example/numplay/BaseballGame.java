@@ -18,7 +18,6 @@ public class BaseballGame {
             int digit = random.nextInt(9) + 1; // nextInt(9) 는 0~8 숫자 생성. 그래서 +1 해줌
             correctNumberSet.add(digit); // Set에 추가.
         }
-        System.out.println(correctNumberSet); // ⭐️⭐️테스트용⭐️⭐️
         return correctNumberSet; // correctNumber.size() 가 3이되면 return.
     }
 
@@ -74,6 +73,7 @@ public class BaseballGame {
     public int play(int figure) {
         correctNumberSet = randomNumber(figure); // 게임플레이 시작시에 랜덤숫자 넣기
         correctNumberList.addAll(correctNumberSet); // 게임플레이 시작시에 랜덤숫자 넣기
+        Collections.shuffle(correctNumberList); // 정답이 오름차순으로만 되어있는걸 발견해서 shuffle 추가.
 
         int tryGames = 0;
         // 게임시작
