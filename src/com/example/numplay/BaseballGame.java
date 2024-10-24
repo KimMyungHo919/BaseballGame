@@ -20,7 +20,6 @@ public class BaseballGame {
         }
         return correctNumberSet;
     }
-
     /*
     메뉴를 보여주는 메서드.
     안에서 scanner로 사용자에게 숫자입력을 받고, 그 숫자에 맞게 switch문으로 처리.
@@ -36,15 +35,22 @@ public class BaseballGame {
         switch (userChoice) {
             case "0":
                 System.out.println("자리수를 선택해주세요! (3~5자리)");
-                int figure = scanner.nextInt();
-                scanner.nextLine();
+                try {
+                    int figure = scanner.nextInt();
+                    scanner.nextLine();
 
-                if (figure == 3 || figure == 4 || figure == 5) {
-                    playGame(figure);
-                } else {
-                    System.out.println("자릿수를 잘못 입력했습니다! 처음부터 다시 시작합니다.\n");
+                    if (figure == 3 || figure == 4 || figure == 5) {
+                        playGame(figure);
+                    } else {
+                        System.out.println("자릿수를 잘못 입력했습니다! 처음부터 다시 시작합니다.\n");
+                        showMenu();
+                        return;
+                    }
+                } catch (InputMismatchException error) {
+                    System.out.println("숫자를 입력해야합니다! 메뉴로 돌아갑니다.");
+                    System.out.println("에러메세지 : " + error.getMessage() + "\n");
+                    scanner.nextLine();
                     showMenu();
-                    return;
                 }
                 break;
             case "1":
@@ -136,7 +142,6 @@ public class BaseballGame {
                 return false;
             }
         }
-
         return true;
     }
 
@@ -154,7 +159,6 @@ public class BaseballGame {
                 strikes++;
             }
         }
-
         return strikes;
     }
 
@@ -172,7 +176,6 @@ public class BaseballGame {
                 balls++;
             }
         }
-
         return balls;
     }
 }
