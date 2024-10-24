@@ -13,13 +13,11 @@ public class BaseballGame {
 
     // int형 매개변수 figure를 받아서, 그 숫자에 맞는 자리수로 중복되지 않는 랜덤숫자를 만들어 Set에 넣어주는 메서드.
     private Set<Integer> randomNumber(int figure) {
-
         while (correctNumberSet.size() < figure) {
             Random random = new Random();
             int digit = random.nextInt(9) + 1;
             correctNumberSet.add(digit);
         }
-
         return correctNumberSet;
     }
 
@@ -28,13 +26,11 @@ public class BaseballGame {
     안에서 scanner로 사용자에게 숫자입력을 받고, 그 숫자에 맞게 switch문으로 처리.
      */
     public void showMenu() {
-
         System.out.println("환영합니다! 원하시는 번호를 입력해주세요");
         System.out.println("0. 자릿수로 난이도 조절하기");
         System.out.println("1. 게임 시작하기");
         System.out.println("2. 기록보기");
         System.out.println("3. 게임 종료하기");
-
         String userChoice = scanner.nextLine();
 
         switch (userChoice) {
@@ -51,20 +47,16 @@ public class BaseballGame {
                     return;
                 }
                 break;
-
             case "1":
                 playGame(3);
                 break;
-
             case "2":
                 showRecord();
                 break;
-
             case "3":
                 System.out.println("< 숫자야구게임을 종료합니다. >");
                 System.exit(0);
                 break;
-
             default:
                 System.out.println("잘못 입력하셨습니다! 다시 시작합니다.");
                 showMenu();
@@ -74,7 +66,6 @@ public class BaseballGame {
 
     // 현재까지의 게임 기록을 보여주는 메서드.
     public void showRecord() {
-
         if (recordList.isEmpty()) {
             System.out.println("아직 게임을 진행하지 않았습니다! 게임을 진행해주세요!");
         }
@@ -84,13 +75,11 @@ public class BaseballGame {
         }
 
         System.out.println();
-
         showMenu();
     }
 
     // int형 매개변수 figure. 게임진행 메서드.
     public int playGame(int figure) {
-
         correctNumberSet = randomNumber(figure);
         correctNumberList.addAll(correctNumberSet);
         Collections.shuffle(correctNumberList);
@@ -108,28 +97,22 @@ public class BaseballGame {
                 System.out.println("잘못된 입력값입니다. 다시 입력해주세요.");
                 continue;
             }
-
             // 3. 게임 진행횟수 증가
             tryGames++;
-
             // 4. 스트라이크 개수 계산
             int strikes = countStrike(userInput);
-
             // 5. 정답여부 확인
             if (strikes == figure) {
                 System.out.println("홈런 !");
                 System.out.println(tryGames + "번째 시도에 정답을 맞췄어요!\n");
 
                 recordList.add(tryGames);
-
                 correctNumberSet.clear();
                 correctNumberList.clear();
                 break;
             }
-
             // 6. 볼 개수 계산
             int balls = countBall(userInput);
-
             // 7. 힌트 출력
             gameDisplay.displayHint(strikes, balls);
         }
@@ -142,7 +125,6 @@ public class BaseballGame {
 
     // 게임진행시 유저의 입력값이 형식에 맞는지 판단하는 메서드.
     protected boolean validateInput(String input) {
-
         Set<Character> userInputSet = new HashSet<>();
 
         if (!input.matches("[1-9]{3,5}")) {
@@ -160,7 +142,6 @@ public class BaseballGame {
 
     // 스트라이크 수를 계산하는 메서드
     private int countStrike(String input) {
-
         int strikes = 0;
         List<Integer> userInputList = new ArrayList<>();
 
@@ -179,7 +160,6 @@ public class BaseballGame {
 
     // 볼 수를 계산하는 메서드
     private int countBall(String input) {
-
         int balls = 0;
         List<Integer> userInputList = new ArrayList<>();
 
@@ -195,6 +175,4 @@ public class BaseballGame {
 
         return balls;
     }
-
-
 }
