@@ -62,8 +62,7 @@ public class BaseballGame {
             case "3":
                 System.out.println("< 숫자야구게임을 종료합니다. >");
                 scanner.close();
-                System.exit(0);
-                break;
+                return;
             default:
                 System.out.println("잘못 입력하셨습니다! 다시 시작합니다.");
                 showMenu();
