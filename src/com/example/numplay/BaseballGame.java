@@ -61,6 +61,7 @@ public class BaseballGame {
                 break;
             case "3":
                 System.out.println("< 숫자야구게임을 종료합니다. >");
+                scanner.close();
                 System.exit(0);
                 break;
             default:
